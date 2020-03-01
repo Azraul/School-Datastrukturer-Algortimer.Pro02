@@ -1,7 +1,7 @@
 /******************************************************
  * ***  By Kristoffer Kuvaja                        ***
  * ***  Arcada 2020                                 ***
- * ***  Projekt 1, Datastrukturer och Algoritmer    ***
+ * ***  Projekt 2, Datastrukturer och Algoritmer    ***
  *****************************************************/
 
 
