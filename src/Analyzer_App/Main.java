@@ -1,3 +1,5 @@
+package Analyzer_App;
+
 /******************************************************
  * ***  By Kristoffer Kuvaja                        ***
  * ***  Arcada 2020                                 ***
