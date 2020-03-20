@@ -4,11 +4,18 @@ import java.util.HashMap;
 
 public class Language {
     private String Label;
+    private String content;
     private HashMap charDistribution;
 
     public Language(String string, String languageLabel) {
-        charDistribution = calculateCharDistribution(string);
         Label = languageLabel;
+        content = string;
+        charDistribution = calculateCharDistribution(string);
+        if (languageLabel == "unknown"){
+            LanguageStats.guessLanguage(this);
+        } else{
+        LanguageStats.addLanguage(this);
+        }
     }
 
     public HashMap calculateCharDistribution(String content) {
@@ -28,6 +35,9 @@ public class Language {
 
     public String getLabel() {
         return Label;
+    }
+    public HashMap getCharDistribution(){
+        return charDistribution;
     }
 
     public void printMap() {
