@@ -1,11 +1,12 @@
 package Analyzer_App;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class FileInput {
-    public static String readFile(String URL){
+    private static String readFile(String URL){
         String text = new String();
 
         try{
@@ -34,5 +35,17 @@ public class FileInput {
         //returnerar den text vi läste in från filen
 
         return text;
+    }
+    public static void readAvailableLanguages() {
+        File folder = new File("./src/Languages");
+        File[] listOfFiles = folder.listFiles();
+
+        for (int i = 0; i < listOfFiles.length; i++) {
+            if (listOfFiles[i].isFile()) {
+                String name = listOfFiles[i].getName();
+                String URL = "./src/Languages/" + name;
+                new Language(readFile(URL), name);
+            }
+        }
     }
 }
