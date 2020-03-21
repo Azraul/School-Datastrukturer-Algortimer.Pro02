@@ -31,7 +31,7 @@ public class Analyzer {
 
         Scanner keyboard = new Scanner(System.in);
         System.out.println("Skriv någe");
-        String usertext = keyboard.next();
+        String usertext = keyboard.nextLine();
         new Language(usertext.replaceAll("\\s", ""), "unknown");
 
 
