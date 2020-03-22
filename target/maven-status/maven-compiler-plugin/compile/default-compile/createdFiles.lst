@@ -1,0 +1,6 @@
+Analyzer_App\Menu.class
+Analyzer_App\Analyzer.class
+Analyzer_App\FileInput.class
+Analyzer_App\LanguageStats.class
+Analyzer_App\Language.class
+Analyzer_App\Main.class

@@ -1,16 +1,12 @@
 package Analyzer_App;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-/**
- * @author kuvajaan
- */
 public class Menu {
     //https://howtodoinjava.com/sort/java-sort-map-by-values/
     private static Map sortMap(Map<String, Double> mapToSort) {
-        LinkedHashMap<String, Double> sortedMap = new LinkedHashMap<>();
+        LinkedHashMap<String, Double> sortedMap = new LinkedHashMap<String, Double>();
         mapToSort.entrySet()
                 .stream()
                 .sorted(Map.Entry.comparingByValue())
@@ -91,7 +87,7 @@ public class Menu {
     }
 
     //For combined analysis
-    public void results(Map scoreTable, Map oneChrScore, Map threeCharScore, Map firstCharScore) {
+    public void results(Map<String, Double> scoreTable, Map<String, Double> oneChrScore, Map<String, Double> threeCharScore, Map<String, Double> firstCharScore) {
         LinkedHashMap<String, Double> sortedMap = (LinkedHashMap<String, Double>) sortMap(scoreTable);
         System.out.format("%45s", "Scores\n\n");
         System.out.format("%16s%16s%16s%16s%16s", "Language", "Method 1", "Method 2", "Method 3", "Total" + "\n");
@@ -100,9 +96,9 @@ public class Menu {
             Double value = entry.getValue();
             System.out.format("%16s%16s%16s%16s%16s",
                     key,
-                    Math.round((double) oneChrScore.get(key) * 1000.0) / 1000.0,
-                    Math.round((double) threeCharScore.get(key) * 1000.0) / 1000.0,
-                    Math.round((double) firstCharScore.get(key) * 1000.0) / 1000.0,
+                    Math.round(oneChrScore.get(key) * 1000.0) / 1000.0,
+                    Math.round(threeCharScore.get(key) * 1000.0) / 1000.0,
+                    Math.round(firstCharScore.get(key) * 1000.0) / 1000.0,
                     Math.round(value * 1000.0) / 1000.0 +
                             "\n");
         }

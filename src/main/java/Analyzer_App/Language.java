@@ -28,7 +28,7 @@ public class Language {
         content = getLettersOnly(content);
         //Dividing by content.length is not exact for character sequences larger than one
         double denominator = (double) content.length()-charSequence+1.0;
-        HashMap<String, Double> calculatedCharDistribution = new HashMap<>();
+        HashMap<String, Double> calculatedCharDistribution = new HashMap<String, Double>();
         for (int i = 0; i < content.length(); i++) {
             String c = null;
             if (charSequence==1){

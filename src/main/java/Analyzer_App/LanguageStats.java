@@ -1,8 +1,6 @@
 package Analyzer_App;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class LanguageStats {
     /*
@@ -11,7 +9,7 @@ public class LanguageStats {
     Guessed languages are not added to existing languages, however:
     topEstimation.getCharDistribution().putAll(inputDistribution);
      */
-    public static HashMap<String, Language> languages = new HashMap<>();
+    public static HashMap<String, Language> languages = new HashMap<String, Language>();
 
 
     public static void addLanguage(Language language) {
@@ -25,7 +23,7 @@ public class LanguageStats {
                 Print the topEstimation with Menu class
      */
     public static Language guessLanguage(Language languageToGuess, int option) {
-        Map<String, Double> scoreTable = new HashMap<>();
+        Map<String, Double> scoreTable = new HashMap<String, Double>();
 
         Language topEstimation = null;
         Menu menu = new Menu();
@@ -33,9 +31,9 @@ public class LanguageStats {
         double score = 0, topScore = 1;
         double totalScore = score;
         if (option == 4){
-            Map<String, Double> oneCharScore = new HashMap<>();
-            Map<String, Double> threeCharScore = new HashMap<>();
-            Map<String, Double> firstCharScore = new HashMap<>();
+            Map<String, Double> oneCharScore = new HashMap<String, Double>();
+            Map<String, Double> threeCharScore = new HashMap<String, Double>();
+            Map<String, Double> firstCharScore = new HashMap<String, Double>();
             for (Map.Entry<String, Language> languageEntry : languages.entrySet()) {
                 String lang = languageEntry.getKey();
                 Language langDistro = languageEntry.getValue();
@@ -91,28 +89,6 @@ public class LanguageStats {
                                     langDistro.getFirstLetterDistribution()
                             );
                             break;
-                        /*case 4:
-                            double combinedScore = 0;
-                            score = compareHashes(
-                                    languageToGuess.getCharDistribution(),
-                                    langDistro.getCharDistribution()
-                            );
-                            oneCharScore.put(lang, score);
-                            combinedScore += score;
-                            score = compareHashes(
-                                    languageToGuess.getThreeCharDistribution(),
-                                    langDistro.getThreeCharDistribution()
-                            );
-                            threeCharScore.put(lang, score);
-                            combinedScore += score;
-                            score = compareHashes(
-                                    languageToGuess.getFirstLetterDistribution(),
-                                    langDistro.getFirstLetterDistribution()
-                            );
-                            firstCharScore.put(lang, score);
-                            combinedScore += score;
-                            score = combinedScore;
-                            break;*/
                         default:
                             menu.invalid();
                             //unknown

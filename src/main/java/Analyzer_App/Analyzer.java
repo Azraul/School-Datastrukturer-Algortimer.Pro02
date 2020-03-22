@@ -38,9 +38,11 @@ public class Analyzer {
                 case 2:
                     menu.Case(choice);
                     //Prints all languages read
-                    LanguageStats.languages.entrySet().forEach(entry->{
-                        System.out.println("\t# "+entry.getKey());
-                    });
+                    for (String name: LanguageStats.languages.keySet()){
+                        String key = name;
+                        String value = LanguageStats.languages.get(name).toString();
+                        System.out.println("\t# "+key);
+                    }
                     break;
                 default:
                     menu.Case(choice);

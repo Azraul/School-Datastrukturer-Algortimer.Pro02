@@ -37,13 +37,13 @@ public class FileInput {
         return text;
     }
     public static void readAvailableLanguages() {
-        File folder = new File("./src/Languages");
+        File folder = new File("./src/main/java/Languages/");
         File[] listOfFiles = folder.listFiles();
 
         for (int i = 0; i < listOfFiles.length; i++) {
             if (listOfFiles[i].isFile()) {
                 String name = listOfFiles[i].getName();
-                String URL = "./src/Languages/" + name;
+                String URL = "./src/main/java/Languages/" + name;
                 new Language(readFile(URL), name);
             }
         }
