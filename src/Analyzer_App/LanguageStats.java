@@ -1,6 +1,8 @@
 package Analyzer_App;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class LanguageStats {
     /*
@@ -23,51 +25,107 @@ public class LanguageStats {
                 Print the topEstimation with Menu class
      */
     public static Language guessLanguage(Language languageToGuess, int option) {
-        Map<String, Double> score = new HashMap<>();
+        Map<String, Double> scoreTable = new HashMap<>();
+
         Language topEstimation = null;
         Menu menu = new Menu();
-        //System.out.println(languageToGuess.keySet());
-        double currentScore = 0, topScore = 1;
-        double totalScore = currentScore;
-        for (Map.Entry<String, Language> languageEntry : languages.entrySet()) {
-            String lang = languageEntry.getKey();
-            Language langDistro = languageEntry.getValue();
-            switch (option) {
-                case 1:
-                    currentScore = compareHashes(languageToGuess.getCharDistribution(), langDistro.getCharDistribution());
-                    break;
-                case 2:
-                    currentScore = compareHashes(languageToGuess.getThreeCharDistribution(), langDistro.getThreeCharDistribution());
-                    break;
-                case 3:
-                    currentScore = compareHashes(languageToGuess.getFirstLetterDistribution(), langDistro.getFirstLetterDistribution());
-                    break;
-                case 4:
-                    currentScore = compareAllHashes(languageToGuess, langDistro);
-                    break;
-                default:
-                    menu.invalid();
-                    //unknown
-                    return languageToGuess;
-            }
-            score.put(lang, currentScore);
-            if (topScore > currentScore) {
-                topScore = currentScore;
-                topEstimation = langDistro;
-            }
+        menu.guessOptions();
+        double score = 0, topScore = 1;
+        double totalScore = score;
+        if (option == 4){
+            Map<String, Double> oneCharScore = new HashMap<>();
+            Map<String, Double> threeCharScore = new HashMap<>();
+            Map<String, Double> firstCharScore = new HashMap<>();
+            for (Map.Entry<String, Language> languageEntry : languages.entrySet()) {
+                String lang = languageEntry.getKey();
+                Language langDistro = languageEntry.getValue();
+                double combinedScore = 0;
+                score = compareHashes(
+                        languageToGuess.getCharDistribution(),
+                        langDistro.getCharDistribution()
+                );
+                oneCharScore.put(lang, score);
+                combinedScore += score;
+                score = compareHashes(
+                        languageToGuess.getThreeCharDistribution(),
+                        langDistro.getThreeCharDistribution()
+                );
+                threeCharScore.put(lang, score);
+                combinedScore += score;
+                score = compareHashes(
+                        languageToGuess.getFirstLetterDistribution(),
+                        langDistro.getFirstLetterDistribution()
+                );
+                firstCharScore.put(lang, score);
+                combinedScore += score;
+                score = combinedScore;
+                scoreTable.put(lang, score);
+                if (topScore > score) {
+                    topScore = score;
+                    topEstimation = langDistro;
+                }
         }
-        //https://howtodoinjava.com/sort/java-sort-map-by-values/
-        LinkedHashMap<String, Double> sortedMap = new LinkedHashMap<>();
-        score.entrySet()
-                .stream()
-                .sorted(Map.Entry.comparingByValue())
-                .forEachOrdered(x -> sortedMap.put(x.getKey(), x.getValue()));
-        for (Map.Entry<String, Double> entry : sortedMap.entrySet()) {
-            String key = entry.getKey();
-            Double value = entry.getValue();
-            //https://docs.oracle.com/javase/6/docs/api/java/util/Formatter.html
-            System.out.format("%16s%16s", key, Math.round(value * 1000.0) / 1000.0+"\n");
+
+            menu.results(scoreTable, oneCharScore, threeCharScore, firstCharScore);
         }
+        else{
+                for (Map.Entry<String, Language> languageEntry : languages.entrySet()) {
+                    String lang = languageEntry.getKey();
+                    Language langDistro = languageEntry.getValue();
+                    switch (option) {
+                        case 1:
+                            score = compareHashes(
+                                    languageToGuess.getCharDistribution(),
+                                    langDistro.getCharDistribution()
+                            );
+                            break;
+                        case 2:
+                            score = compareHashes(
+                                    languageToGuess.getThreeCharDistribution(),
+                                    langDistro.getThreeCharDistribution()
+                            );
+                            break;
+                        case 3:
+                            score = compareHashes(
+                                    languageToGuess.getFirstLetterDistribution(),
+                                    langDistro.getFirstLetterDistribution()
+                            );
+                            break;
+                        /*case 4:
+                            double combinedScore = 0;
+                            score = compareHashes(
+                                    languageToGuess.getCharDistribution(),
+                                    langDistro.getCharDistribution()
+                            );
+                            oneCharScore.put(lang, score);
+                            combinedScore += score;
+                            score = compareHashes(
+                                    languageToGuess.getThreeCharDistribution(),
+                                    langDistro.getThreeCharDistribution()
+                            );
+                            threeCharScore.put(lang, score);
+                            combinedScore += score;
+                            score = compareHashes(
+                                    languageToGuess.getFirstLetterDistribution(),
+                                    langDistro.getFirstLetterDistribution()
+                            );
+                            firstCharScore.put(lang, score);
+                            combinedScore += score;
+                            score = combinedScore;
+                            break;*/
+                        default:
+                            menu.invalid();
+                            //unknown
+                            return languageToGuess;
+                    }
+                    scoreTable.put(lang, score);
+                    if (topScore > score) {
+                        topScore = score;
+                        topEstimation = langDistro;
+                    }
+                }
+                    menu.results(scoreTable);
+                }
         return topEstimation;
     }
 
@@ -86,15 +144,5 @@ public class LanguageStats {
             currentScore += weight * weight;
         }
         return currentScore;
-    }
-
-    private static Double compareAllHashes(Language languageToGuess, Language langDistro){
-        //HashMap<String, Double> totalScore = new HashMap<>();
-        Double currentScore, totalScore;
-        currentScore = compareHashes(languageToGuess.getCharDistribution(), langDistro.getCharDistribution());
-        currentScore += compareHashes(languageToGuess.getThreeCharDistribution(), langDistro.getThreeCharDistribution());
-        currentScore += compareHashes(languageToGuess.getFirstLetterDistribution(), langDistro.getFirstLetterDistribution());
-        totalScore = currentScore;
-        return totalScore;
     }
 }

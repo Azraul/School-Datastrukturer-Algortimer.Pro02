@@ -11,13 +11,7 @@ public class Language {
     private HashMap threeCharDistribution;
     private HashMap firstLetterDistribution;
 
-    /*
-    I decided to create 1 large Hashmap (charDistribution) for all 3 required analyses
-    and values as it was sufficient for the assignment. First word letters are defined by upper case.
-     */
-    public Language(){
-
-    }
+    //constructor
     public Language(String string, String languageLabel) {
         content = string;
         charDistribution = calculateCharDistribution(content.toLowerCase(), 1);

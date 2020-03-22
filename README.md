@@ -10,7 +10,7 @@ Språk i olika text filer finns i projektet.
 Bygg som ett vanligt java projekt.
 
 ## Körning
-Inget ännu
+![image of program running](images/program.gif)
 
 ## Contribution
 Project highly unlikely to be updated or modified after completion but any constructive criticism is welcome!
