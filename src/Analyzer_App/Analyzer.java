@@ -29,7 +29,11 @@ public class Analyzer {
                     //new scanner for user generated text
                     Scanner language = new Scanner(System.in);
                     String s = language.nextLine();
-                    new Language(s, null);
+                    Language user = new Language(s, null);
+                    Scanner option = new Scanner(System.in);
+                    menu.guessOptions();
+                    int guessOption = option.nextInt();
+                    menu.guessAnswer(LanguageStats.guessLanguage(user, guessOption));
                     break;
                 case 2:
                     menu.Case(choice);

@@ -8,21 +8,23 @@ public class Language {
     private String Label;
     private String content;
     private HashMap charDistribution;
+    private HashMap threeCharDistribution;
+    private HashMap firstLetterDistribution;
 
     /*
     I decided to create 1 large Hashmap (charDistribution) for all 3 required analyses
     and values as it was sufficient for the assignment. First word letters are defined by upper case.
      */
+    public Language(){
+
+    }
     public Language(String string, String languageLabel) {
         content = string;
         charDistribution = calculateCharDistribution(content.toLowerCase(), 1);
-        charDistribution.putAll(calculateCharDistribution(content.toLowerCase(), 3));
-        charDistribution.putAll(calculateCharDistribution(getFirstLetters(content.toUpperCase()),1));
+        threeCharDistribution = calculateCharDistribution(content.toLowerCase(), 3);
+        firstLetterDistribution = calculateCharDistribution(getFirstLetters(content.toUpperCase()),1);
         //Defines between read text files and user generated languages
-        if (languageLabel == null){
-            Label = "unknown";
-            LanguageStats.guessLanguage(this);
-        } else {
+        if (languageLabel != null){
             Label = getLabelFreeExtension(languageLabel);
             LanguageStats.addLanguage(this);
         }
@@ -34,8 +36,13 @@ public class Language {
         double denominator = (double) content.length()-charSequence+1.0;
         HashMap<String, Double> calculatedCharDistribution = new HashMap<>();
         for (int i = 0; i < content.length(); i++) {
-            if (content.length()-charSequence>i){
-                String c = content.substring(i, i + charSequence);
+            String c = null;
+            if (charSequence==1){
+                c = String.valueOf(content.charAt(i));
+            } else if (content.length()-charSequence>i){
+                c = content.substring(i, i + charSequence);
+            }
+            if (c !=null){
                 Double val = calculatedCharDistribution.get(c);
                 if (val != null) {
                     calculatedCharDistribution.put(c, val + (1.0 /denominator));
@@ -53,6 +60,12 @@ public class Language {
 
     public HashMap getCharDistribution() {
         return charDistribution;
+    }
+    public HashMap getThreeCharDistribution(){
+        return threeCharDistribution;
+    }
+    public HashMap getFirstLetterDistribution(){
+        return firstLetterDistribution;
     }
 
     //Pretty label

@@ -44,8 +44,23 @@ public class Menu {
              break;
      }
     }
+    public void invalid(){
+        System.out.println("No valid option was chosen, please try again.");
+    }
     public void feedback(String s){
         System.out.println("The most likely language, according to our estimations, for your text is "+s);
         System.out.println("If you are satisfied with the answer, remember to provide feedback to your nearest Admin");
+    }
+
+    public void guessOptions() {
+        System.out.println("Select how we should analyse your text by providing the relevant number:");
+        System.out.println("1: By letters");
+        System.out.println("2: By groups of 3 letters");
+        System.out.println("3: By the first letter in each word");
+        System.out.println("4: By all the above options");
+    }
+    public void guessAnswer(Language estimated){
+        System.out.println("By our current database we estimate that the text you provided originates in "+estimated.getLabel());
+        System.out.println("Thank you for using our program");
     }
 }
